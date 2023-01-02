@@ -49,6 +49,8 @@ class KNN:
 
         k_indices = np.argsort(distances)[:self.k]
         k_nearest_labels = [self.y_train[i] for i in k_indices]
-
+        
+        #Get the most common label so it will be considered as prediction for the particular value
+        
         most_common = Counter(k_nearest_labels).most_common()
         return most_common
