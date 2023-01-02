@@ -35,7 +35,7 @@ class KNN:
 
         #Get the closest K 
         #Here the np.argsort isn't actually sorting the distances list
-        #What it is doing is it is just considers the sorted list, which it does
+        #What it is doing is it just considers the sorted list, which it does
         #internally, and stores the indices of those values in the actual List
         #Example --- >
         #suppose we have list [4,5,2,8,12,1]
