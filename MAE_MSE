@@ -1,0 +1,48 @@
+
+
+MAE and MSE are both cost functions
+
+Cost functions are those functions that we tend to minimize 
+They primarily calculate the error in the predicted and true value, Thus minimizing those functions improves prediction capabilities
+
+
+MAE stands for Mean Absolute Error
+What it does is just calculates the sum of absolute difference of predicted and true values for n samples and calculates its mean
+Example,
+suppose we have samples x1,x2,x3,x4 where these samples might be single features or Feature vectors having true values y_true1,y_true2,y_true3,ytrue4
+
+Suppose our initial dummy prediction gives values y_pred1, y_pred2, y_pred3, y_pred4
+
+So our MAE  would be 
+
+MAE =   (1/N)  *  np.sum (|y_pred - y_true| )   Where the np.sum function calculates the difference list and then sums all of its values
+
+
+
+
+
+Unlike this, MSE calculates Mean with Squaring 
+As it is being squared,we do not require the absolute conversion
+So the MSE is given as
+
+MSE = (1/N) * sum((y_pred - y_true)^2)
+
+where N is the number of samples, y_pred is the predicted value, and y_true is the true value.
+
+If someone uses the formula without squaring the difference between the predicted and true values, it would be a different cost function 
+called mean absolute error (MAE). The formula for MAE is:
+
+MAE = (1/N) * sum(|y_pred - y_true|)
+
+where N is the number of samples, y_pred is the predicted value, and y_true is the true value.
+
+Both MSE and MAE are commonly used cost functions for regression problems, but they have different properties. 
+MSE is a continuous, positive, and squared function, which means that the error is squared and the gradient is always positive. 
+This can lead to more robust models, because it penalizes large errors more than small errors.
+
+On the other hand, MAE is a continuous and positive function, but it is not squared. 
+This means that the error is not squared and the gradient is always positive, regardless of the size of the error.
+MAE is less sensitive to outliers than MSE, because it does not penalize large errors as much.
+
+In general, MSE is more commonly used than MAE, because it has a nice statistical interpretation and it is differentiable (which is useful for optimization).
+However, MAE can be used in cases where you want to give equal weight to all errors, regardless of their size.
