@@ -1,0 +1,296 @@
+\begin{center}
+Linear Regression
+
+(You cannot understand it without knowing partial derivative!)
+\end{center}
+
+
+First and foremost we need to consider vanilla linear regression to understand how does it work, then you can apply the same concept to multivariate linear regression
+
+
+
+But, what is vanilla linear regression? Well, it is just linear regression which involves single feature per feature vector i.e label is dependent only on one feature.
+
+
+
+So, as you might have guessed, we will not be getting matrix for feature, but just a sample array which contains values of feature for individual samples
+
+
+
+
+
+
+
+We will approach to this Linear Regression problem with module based approach, like we will first understand what is gradient descent algorithm is, and then we will be going to simply put our 
+
+Regression model into that.
+
+So, lets undestand gradient descent first!
+
+\begin{center}
+Gradient Descent 
+
+\end{center}
+Consider a function,
+
+				 \ $\displaystyle  \begin{array}{{>{\displaystyle}l}}
+y\ =\ x^{2}\\
+\\
+and\ its\ differential\ w.r.t\ x\ is\\
+\\
+\frac{dy}{dx} \ =\ 2x
+\end{array}$
+
+
+
+So this is saying how y is changing w.r.t x
+
+
+
+But this is again differentiable which outputes 2 which indicates that the function is convex
+
+
+
+The graph of this function would look like this,
+
+
+
+
+
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,236); %set diagram left start at 0, and has height of 236
+
+% Plotting does not support converting to Tikz
+%Shape: Free Drawing [id:dp12366885399969085] 
+\draw  [line width=3] [line join = round][line cap = round] (188.8,38.6) .. controls (184.64,38.6) and (188.64,44.92) .. (189.8,42.6) .. controls (191.64,38.91) and (189.75,37.62) .. (186.8,38.6) .. controls (186.2,38.8) and (187.91,41.54) .. (189.8,40.6) .. controls (190.38,40.31) and (188.09,38.02) .. (187.8,38.6) .. controls (186.49,41.22) and (189.1,41.17) .. (190.8,40.6) .. controls (191.8,40.27) and (188.85,39.6) .. (187.8,39.6) ;
+%Shape: Free Drawing [id:dp25850276040424336] 
+\draw  [line width=1.5] [line join = round][line cap = round] (176.8,35.6) .. controls (173.01,35.6) and (171.41,43.68) .. (168.8,47.6) ;
+%Shape: Free Drawing [id:dp43877236173217815] 
+\draw  [line width=1.5] [line join = round][line cap = round] (175.8,34.6) .. controls (175.8,42.34) and (178.22,46.02) .. (182.8,50.6) ;
+%Shape: Free Drawing [id:dp5386786887987414] 
+\draw  [line width=1.5] [line join = round][line cap = round] (171.8,42.6) .. controls (171.8,44.3) and (175.1,43.6) .. (176.8,43.6) ;
+%Shape: Free Drawing [id:dp9214088397969964] 
+\draw  [line width=3] [line join = round][line cap = round] (249.8,49.6) .. controls (245.64,49.6) and (249.64,55.92) .. (250.8,53.6) .. controls (252.64,49.91) and (250.75,48.62) .. (247.8,49.6) .. controls (247.2,49.8) and (248.91,52.54) .. (250.8,51.6) .. controls (251.38,51.31) and (249.09,49.02) .. (248.8,49.6) .. controls (247.49,52.22) and (250.1,52.17) .. (251.8,51.6) .. controls (252.8,51.27) and (249.85,50.6) .. (248.8,50.6) ;
+%Shape: Free Drawing [id:dp011163503310522849] 
+\draw  [line width=1.5] [line join = round][line cap = round] (257.8,46.6) .. controls (259.65,48.45) and (260.35,49.42) .. (260.8,52.6) .. controls (261.04,54.28) and (261.47,59.27) .. (261.8,57.6) .. controls (262.44,54.39) and (256.36,43.08) .. (260.8,41.6) .. controls (266.72,39.63) and (266.12,49.34) .. (265.8,51.6) .. controls (265.59,53.08) and (260.31,53.6) .. (261.8,53.6) .. controls (265.47,53.6) and (269.35,52.35) .. (272.8,53.6) .. controls (276.87,55.08) and (261.8,70.43) .. (261.8,57.6) ;
+
+% Text Node
+\draw (560,25.4) node [anchor=north west][inner sep=0.75pt]    {$y=x^{2}$};
+
+
+\end{tikzpicture}
+
+
+
+
+
+Suppose you don't know where the function attains minimum value(I know it is trivial here) 
+
+Then what are possible options do you have?
+
+ 
+
+What you can do here is just take random x value (typically we take around \ zero)
+
+
+
+Here suppose we take the value of x = x\textsubscript{1}
+
+
+
+Then we then put this value into differential to calculate the slope 
+
+i.e 
+
+		$\displaystyle \frac{dy}{dx} =\ 2\ *\ x =\ 2\ *\ x_{1} \ =\ 2x_{1}$
+
+
+
+Here the 2x\textsubscript{1} value represents the slope, here two conditions are possible,
+
+
+
+1.) \ positive 
+
+2.) \ negative 
+
+
+
+Here 1.) means that slope is positive and we are on the increasing part of the function
+
+	 \ \ \ \ \ So in order to achieve global minima, we must REDUCE the value of $\displaystyle x$ 
+
+	 \ \ \ \ \ That is we are in the part of B and we need to reduce x
+
+	 \ \ \ \ \ So we need to calculate value of x,
+
+
+
+		$\displaystyle x_{new} \ =\ x_{old} \ -\ learningRate\ *\ slope$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (consider lr to be small like 0.01)
+
+		(Here - will become + as slope is negative, thus increasing value of old x)		
+
+
+
+		So here, we get new $\displaystyle x$, which we are again going to put into differential to calculate 
+
+		slope and thus calculating new x value,
+
+		we will keep doing this until sufficient iterations are not met where will assure that x is 
+
+		closer to global minima or we do it until slope becomes zero i.e no new x values
+
+
+
+
+
+ 	 \ 2.) means that slope is negative and we are on the decreasing part of the function 
+
+ \ \ 	 \ \ \ \ \ \ So in order to achieve global minima, we must INCREASE \ \ the value of $\displaystyle x$ 
+
+	 \ \ \ \ \ \ That is we are in the part of A and we need to increase x 
+
+	 \ \ \ \ \ \ So we need to calculate value of x,
+
+ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
+
+	 \ \ \ \ \ \ $\displaystyle x_{new} \ =\ x_{old} \ -\ learningRate\ *\ slope$ \ \ \ \ \ \ \ \ 
+
+		(Here - will remain as it is, thus decreasing the value of old x)
+
+	
+
+	 \ \ \ \ \ So here, we get new x, which we are again going to put into differential to calculate
+
+	 \ \ \ \ \ slope and thus calculating new x value (everything else as above)
+
+
+
+
+
+
+
+
+
+
+
+\textbf{So how does this help us solve linear regression?}
+
+
+
+Well in linear regression what is important is MSE or Means Squared Error 
+
+It is given by 
+
+
+
+$\displaystyle MSE\ =\ \frac{1}{N} \ *\ \sum ( y_{pred} \ -\ y_{real})^{2}$
+
+	 \ \ \ \ \ \ 
+
+Here we calcuate average value of squared error 
+
+
+
+\textbf{And our target is to minimize this using Gradient Descent!}
+
+
+
+So, you just need to fit this in the above discussion, see how it fits.
+
+
+
+So MSE is the function we need to minimize,
+
+as we have talked earlier as we are considering only one feature, we can represent the linear regression with a line which has equation
+
+	$\displaystyle y\ =\ mx\ +\ c$
+
+
+
+where \textbf{m} is the slope of the regression line and \textbf{c} is y-intercept
+
+
+
+
+
+So our $\displaystyle y_{pred} \ $is actually the above equation!
+
+
+
+So put that in equation of MSE,
+
+
+
+
+
+$\displaystyle MSE\ =\ \frac{1}{N} \ *\ \sum (( mx+c) \ -\ y_{real})^{2}$
+
+
+
+Now we have two independent variables over here, m and c
+
+So here the need of partial derivative comes!
+
+
+
+
+
+First keeping c constant,
+
+
+
+
+
+$\displaystyle \frac{\partial \ MSE}{\partial m} \ =\ \frac{1}{N} \ *\ 2\sum (( mx+c) \ -\ y_{real}) \ *\ x$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (We can ignore 2 here)
+
+
+
+
+
+
+
+Then keeping m constant,
+
+
+
+$\displaystyle \frac{\partial \ MSE}{\partial c} \ =\ \frac{1}{N} \ *\ 2\sum (( mx+c) \ -\ y_{real})$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (We can ignore 2 here as well)
+
+
+
+
+
+
+
+So here, in (A) the x multiplied at last is nothing but our feature matrix
+
+So we just now put values of m and c in above equations and update m and c like
+
+
+
+
+
+$\displaystyle m\ =\ m\ -\ learningRate\ *\ \frac{\partial \ MSE}{\partial m}$
+
+
+
+
+
+$\displaystyle c\ =\ c\ -\ learningRate\ *\ \frac{\partial \ MSE}{\partial c}$
+
+
+
+
+
+and again we fed these values into above two equations and calcuate partial derivatives.
+
+This again goes on until specified iterations are not done or else,
+
+when we see that m and c are changing very slowely over time, we can stop training our model.
+
+(Normally in code, we rely on iterations)
