@@ -1,0 +1,10 @@
+In machine learning, an outlier is a data point that is significantly different from the other points in a dataset.
+Outliers can be caused by various factors, such as measurement errors, experimental errors, or anomalies in the data.
+
+Outliers can have a significant impact on the performance of machine learning algorithms, especially if they are not detected and handled properly. 
+For example, if an outlier is present in the training data, it can cause the model to fit poorly to the majority of the data and 
+to perform poorly on the test data. Outliers can also cause the model to overfit to the training data, leading to poor generalization to new data.
+
+To deal with outliers in machine learning, it is often necessary to identify and handle them in some way. 
+This can involve removing or filtering out the outliers, imputing missing values for the outliers, or using algorithms that are robust to outliers. 
+The appropriate approach will depend on the specific characteristics of the data and the goals of the machine learning task.
